@@ -13,7 +13,7 @@ import PostThread from "./components/PostThread";
 injectTapEventPlugin();
 
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.handleAddPost = this.toggleAddPostModal.bind(this, true);
@@ -27,19 +27,21 @@ class App extends Component {
   }
 
   toggleAddPostModal(isAddingPost) {
-    this.setState({isAddingPost});
+    this.setState({ isAddingPost });
   }
 
-  handleAddPostSubmit (post) {
+  handleAddPostSubmit(post) {
     const posts = this.state.posts;
-    const newPost = {...post, id: posts.length + 1, tags: []};
+    const newPost = { ...post, id: posts.length + 1, tags: [] };
 
-    // TODO add new post (newPost variable) to the list of posts
+    // DONE add new post (newPost variable) to the list of posts
+    posts.push(newPost);
+    this.setState({ posts });
   }
 
   render() {
-    const {posts} = this.state;
-    // TODO show modal (AddPostModal) when user clicks on "Add Post"
+    const {posts, isAddingPost} = this.state;
+    // DONE show modal (AddPostModal) when user clicks on "Add Post"
 
     return (
       <MuiThemeProvider>
@@ -50,6 +52,12 @@ class App extends Component {
             iconElementRight={<AppPost onTap={this.handleAddPost} />}
           />
           <PostThread posts={posts} />
+          {isAddingPost &&
+            <AddPostModal
+              onClose={this.handleAddPostCancel}
+              onSubmit={this.handleAddPostSubmit}
+            />
+          }
         </div>
       </MuiThemeProvider>
     );

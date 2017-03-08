@@ -1,11 +1,12 @@
-import React, {PropTypes} from "react";
+import React, { PropTypes } from "react";
 import FlatButton from "material-ui/FlatButton";
 
-const AddPost = () => {
-  const onTap = function () {};
-  // TODO onTouchTap should invoke the "onTap" callback
+const AddPost = (props) => {
+  //const onTap = () => props.onTap(true);
+  //const onTap = props.onTap;
+  // DONE onTouchTap should invoke the "onTap" callback
 
-  return (<FlatButton label="Add post" onTouchTap={onTap} />);
+  return (<FlatButton label="Add post" onTouchTap={props.onTap} />);
 };
 
 AddPost.propTypes = {

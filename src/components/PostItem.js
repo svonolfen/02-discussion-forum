@@ -1,16 +1,18 @@
-import React, {PropTypes} from "react";
-import {Card, CardHeader, CardText} from "material-ui/Card";
+import React, { PropTypes } from "react";
+import { Card, CardHeader, CardText } from "material-ui/Card";
+import Chip from 'material-ui/Chip';
+import ReactMarkdown from "react-markdown";
 
 const PostItem = (props) => {
   const {title, message} = props.post;
   let tagElements = [];
 
   if (props.tags && props.tags.length) {
-    // TODO: use Chip for tags: www.material-ui.com/#/components/chip
-    tagElements = props.tags.map((tag) => <span key={tag.id}>{tag.label}</span>);
+    // DONE: use Chip for tags: www.material-ui.com/#/components/chip
+    tagElements = props.tags.map((tag) => <Chip key={tag.id}>{tag.label}</Chip>);
   }
 
-  // TODO make it possible to show formatted message,
+  // DONE make it possible to show formatted message,
   // e.g. "Hello *world*" - world will be shown as emphasized
   // but try to keep security high by not allowing <script>alert("Heh");</script>
   // can you find the solution?
@@ -24,7 +26,7 @@ const PostItem = (props) => {
       />
       <CardText expandable>
         <div>
-          <p>{message}</p>
+          <ReactMarkdown source={message} />
         </div>
         <div>
           {tagElements}
