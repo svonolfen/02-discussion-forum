@@ -8,6 +8,7 @@ import AppPost from "./components/AddPost";
 import AddPostModal from "./components/AddPostModal";
 import EditPostModal from "./components/EditPostModal";
 import PostThread from "./components/PostThread";
+import SearchBox from "./components/SearchBox";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -27,7 +28,10 @@ class App extends Component {
 
     this.handleTagDelete = this.handleTagDelete.bind(this);
 
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+
     this.state = {
+      searchTerm: "",
       editedPost: null,
       isEditingPost: false,
       posts: posts["posts"]
@@ -69,8 +73,12 @@ class App extends Component {
     this.setState({ posts });
   }
 
+  handleSearchChange(event) {
+    this.setState({ searchTerm: event.target.value });
+  }
+
   render() {
-    const { posts, isAddingPost, editedPost } = this.state;
+    const { posts, isAddingPost, editedPost, searchTerm } = this.state;
     // DONE show modal (AddPostModal) when user clicks on "Add Post"
 
     return (
@@ -81,7 +89,11 @@ class App extends Component {
             iconElementLeft={<span />}
             iconElementRight={<AppPost onTap={this.handleAddPost} />}
           />
-          <PostThread posts={posts} onTagDelete={this.handleTagDelete} onEditPost={this.handleEditPost} />
+          <SearchBox handleChange={this.handleSearchChange} />
+          <PostThread posts={posts}
+            onTagDelete={this.handleTagDelete}
+            onEditPost={this.handleEditPost}
+            filter={searchTerm} />
           {isAddingPost &&
             <AddPostModal
               onClose={this.handleAddPostCancel}
