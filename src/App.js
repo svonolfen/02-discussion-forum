@@ -6,6 +6,7 @@ import "./App.css";
 import posts from "./data/posts";
 import AppPost from "./components/AddPost";
 import AddPostModal from "./components/AddPostModal";
+import EditPostModal from "./components/EditPostModal";
 import PostThread from "./components/PostThread";
 
 // Needed for onTouchTap
@@ -19,10 +20,16 @@ class App extends Component {
     this.handleAddPost = this.toggleAddPostModal.bind(this, true);
     this.handleAddPostCancel = this.toggleAddPostModal.bind(this, false);
     this.handleAddPostSubmit = this.handleAddPostSubmit.bind(this);
+
+    this.handleEditPost = this.toggleEditPostModal.bind(this);
+    this.handleEditPostCancel = this.toggleEditPostModal.bind(this, null);
+    this.handleEditPostSubmit = this.handleEditPostSubmit.bind(this);
+
     this.handleTagDelete = this.handleTagDelete.bind(this);
 
     this.state = {
-      isAddingPost: false,
+      editedPost: null,
+      isEditingPost: false,
       posts: posts["posts"]
     };
   }
@@ -40,6 +47,19 @@ class App extends Component {
     this.setState({ posts });
   }
 
+  toggleEditPostModal(editedPost) {
+    this.setState({ editedPost });
+  }
+
+  handleEditPostSubmit(post) {
+    const posts = this.state.posts;
+
+    var index = posts.findIndex((p) => p.id === post.id);
+    posts[index] = post;
+
+    this.setState({ posts });
+  }
+
   handleTagDelete(post, tagId) {
     const posts = this.state.posts;
     var index = post.tags.indexOf(tagId);
@@ -50,7 +70,7 @@ class App extends Component {
   }
 
   render() {
-    const { posts, isAddingPost } = this.state;
+    const { posts, isAddingPost, editedPost } = this.state;
     // DONE show modal (AddPostModal) when user clicks on "Add Post"
 
     return (
@@ -61,11 +81,18 @@ class App extends Component {
             iconElementLeft={<span />}
             iconElementRight={<AppPost onTap={this.handleAddPost} />}
           />
-          <PostThread posts={posts} onTagDelete={this.handleTagDelete} />
+          <PostThread posts={posts} onTagDelete={this.handleTagDelete} onEditPost={this.handleEditPost} />
           {isAddingPost &&
             <AddPostModal
               onClose={this.handleAddPostCancel}
               onSubmit={this.handleAddPostSubmit}
+            />
+          }
+          {editedPost &&
+            <EditPostModal
+              post={editedPost}
+              onClose={this.handleEditPostCancel}
+              onSubmit={this.handleEditPostSubmit}
             />
           }
         </div>

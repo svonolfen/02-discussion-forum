@@ -10,7 +10,7 @@ class PostThread extends Component {
 
       const postTags = post.tags.map((tagId) => tags[tagId]);
 
-      return <PostItem key={post.id} post={post} tags={postTags} onTagDelete={this.props.onTagDelete} />
+      return <PostItem key={post.id} post={post} tags={postTags} onTagDelete={this.props.onTagDelete} onEditPost={this.props.onEditPost} />
     });
 
     return <div>
@@ -21,7 +21,8 @@ class PostThread extends Component {
 
 PostThread.propTypes = {
   posts: PropTypes.array.isRequired,
-  onTagDelete: PropTypes.func.isRequired
+  onTagDelete: PropTypes.func.isRequired,
+  onEditPost: PropTypes.func.isRequired
 };
 
 export default PostThread;

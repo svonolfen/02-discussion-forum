@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
-import { Card, CardHeader, CardText } from "material-ui/Card";
+import { Card, CardHeader, CardText, CardActions } from "material-ui/Card";
+import FlatButton from 'material-ui/FlatButton';
 import Chip from 'material-ui/Chip';
 import ReactMarkdown from "react-markdown";
 
@@ -30,6 +31,9 @@ class PostItem extends React.Component {
           actAsExpander
           showExpandableButton
         />
+        <CardActions>
+          <FlatButton label="Edit" onTouchTap={() => this.props.onEditPost(this.props.post)} />
+        </CardActions>
         <CardText expandable>
           <div>
             <ReactMarkdown source={message} />
@@ -46,7 +50,8 @@ class PostItem extends React.Component {
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   tags: PropTypes.array,
-  onTagDelete: PropTypes.func.isRequired
+  onTagDelete: PropTypes.func.isRequired,
+  onEditPost: PropTypes.func.isRequired
 };
 
 export default PostItem;

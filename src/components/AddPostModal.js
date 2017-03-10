@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from "react";
+import React, { Component, PropTypes } from "react";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import TextField from "material-ui/TextField";
@@ -20,30 +20,32 @@ class AddPostModal extends Component {
       errors: [],
       newPost
     };
+
+    this.title = "Add new post";
   }
 
   handleSubmit() {
-    const {onClose, onSubmit} = this.props;
+    const { onClose, onSubmit } = this.props;
     const errors = this.validateInput();
 
     if (!errors.length) {
       onSubmit(this.state.newPost);
-      this.setState({newPost});
+      this.setState({ newPost });
     }
 
     onClose();
   }
 
-  handleTitleChange (_e, title) {
+  handleTitleChange(_e, title) {
     const newPost = this.state.newPost;
 
-    this.setState({newPost: {...newPost, title}});
+    this.setState({ newPost: { ...newPost, title } });
   }
 
-  handleMessageChange (_e, message) {
+  handleMessageChange(_e, message) {
     const newPost = this.state.newPost;
 
-    this.setState({newPost: {...newPost, message}});
+    this.setState({ newPost: { ...newPost, message } });
   }
 
   validateInput() {
@@ -73,7 +75,7 @@ class AddPostModal extends Component {
     return (
       <div>
         <Dialog
-          title="Add new post"
+          title={this.title}
           actions={this.getActions()}
           modal
           open
