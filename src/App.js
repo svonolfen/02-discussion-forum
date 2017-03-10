@@ -19,6 +19,7 @@ class App extends Component {
     this.handleAddPost = this.toggleAddPostModal.bind(this, true);
     this.handleAddPostCancel = this.toggleAddPostModal.bind(this, false);
     this.handleAddPostSubmit = this.handleAddPostSubmit.bind(this);
+    this.handleTagDelete = this.handleTagDelete.bind(this);
 
     this.state = {
       isAddingPost: false,
@@ -39,8 +40,17 @@ class App extends Component {
     this.setState({ posts });
   }
 
+  handleTagDelete(post, tagId) {
+    const posts = this.state.posts;
+    var index = post.tags.indexOf(tagId);
+    if (index > -1) {
+      post.tags.splice(index, 1);
+    }
+    this.setState({ posts });
+  }
+
   render() {
-    const {posts, isAddingPost} = this.state;
+    const { posts, isAddingPost } = this.state;
     // DONE show modal (AddPostModal) when user clicks on "Add Post"
 
     return (
@@ -51,7 +61,7 @@ class App extends Component {
             iconElementLeft={<span />}
             iconElementRight={<AppPost onTap={this.handleAddPost} />}
           />
-          <PostThread posts={posts} />
+          <PostThread posts={posts} onTagDelete={this.handleTagDelete} />
           {isAddingPost &&
             <AddPostModal
               onClose={this.handleAddPostCancel}
